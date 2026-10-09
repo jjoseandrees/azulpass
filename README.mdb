@@ -1,0 +1,67 @@
+# AzulPass
+
+**Tu entrada y tu partido, en un solo lugar.**
+
+## Promesa
+
+Para el hincha de la U que se complica comprando su entrada y no sabe a qué hora, dónde ni con qué requisitos llegar al partido, **AzulPass** entrega su entrada en tres pasos y toda la información del partido en un solo lugar.
+
+## Integrantes
+
+> COMPLETAR: reemplazar con los datos reales (usuario = el de cada cuenta de GitHub).
+
+| Nombre | Usuario de GitHub | Rol |
+|---|---|---|
+| [Nombre Apellido] | [@usuario] | Coordinación |
+| [Nombre Apellido] | [@usuario] | Documento |
+| [Nombre Apellido] | [@usuario] | Prototipo |
+| [Nombre Apellido] | [@usuario] | Repositorio |
+| [Nombre Apellido] | [@usuario] | [Rol] |
+
+## Enlaces
+
+- **Prototipo navegable:** https://claude.ai/artifact/7XveH55DKzDSRKxqoQFRdL
+- **Respaldo del prototipo:** [prototipo/azulpass_prototipo.html](prototipo/azulpass_prototipo.html) (descargar y abrir en el navegador)
+- **Documento de propuesta (PDF):** [docs/AzulPass_Propuesta_Hito1.pdf](docs/AzulPass_Propuesta_Hito1.pdf)
+- **Láminas de la presentación (PDF):** [docs/Laminas_Hito1.pdf](docs/Laminas_Hito1.pdf)
+- **Mapa del producto:** [docs/mapa_del_producto.png](docs/mapa_del_producto.png)
+- **Diagrama de arquitectura:** [docs/diagrama_de_arquitectura.png](docs/diagrama_de_arquitectura.png)
+- **Video promocional:** se agrega en el Hito 3.
+
+## Cómo ver el prototipo
+
+1. Abre el enlace del prototipo en cualquier navegador, desde el celular o el computador.
+2. Recorre la compra: **Inicio → Partidos → ficha del partido → elegir sector → datos y pago → entrada con QR**.
+3. Si el enlace no abre, descarga `prototipo/azulpass_prototipo.html` y ábrelo con doble clic.
+
+Los datos (rivales, fechas, precios y sectores) son de ejemplo. AzulPass no es la aplicación oficial de ningún club.
+
+## Estructura del repositorio
+
+```
+README.md          Este archivo
+docs/              Documentos en PDF, diagramas e imágenes
+prototipo/         Respaldo del prototipo navegable
+```
+
+Desde el Hito 2 se agregan `db/` (modelo de datos y script de creación), el código fuente organizado por capas y `.env.example`.
+
+## Instalación
+
+El Hito 1 no necesita instalación: el prototipo se abre en el navegador. Las instrucciones para levantar el servicio se agregan en el Hito 2.
+
+## Tecnologías previstas
+
+- **Cliente:** aplicación web de página única con React.
+- **Servidor:** monolito en tres capas (API, negocio y datos) con Node.js y Express.
+- **Base de datos:** PostgreSQL.
+
+## Estado del proyecto
+
+- [x] Hito 1: propuesta, prototipo y arquitectura
+- [ ] Hito 2: servicio en el servidor con base de datos
+- [ ] Hito 3: producto funcionando y video
+
+## Asignatura
+
+INGT1003 · Arquitectura de Desarrollo (Móvil y Web) · Escuela de Ingeniería Civil, Universidad Mayor · Prof. Carlos Muñoz S. · Segundo semestre 2026
