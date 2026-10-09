@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AzulPass · Prototipo navegable</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--pg:#e6eaf3;--ink:#fff;--b0:#06122e;--b1:#0b1f52;--b2:#13306f;--r:#e5243b;--g:#9fb2da;--ok:#2fd27a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--pg:#03060f}}
+:root[data-theme="dark"]{--pg:#03060f}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--pg);font:15px/1.4 Inter,system-ui,sans-serif;color:var(--ink);display:flex;justify-content:center;align-items:center;padding:12px}
+.ph{width:100%;max-width:390px;height:min(820px,100%);background:var(--b0);border-radius:30px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px #0007}
+@media(max-width:430px){body{padding:0}.ph{border-radius:0;max-width:none}}
+#scr{flex:1;overflow-y:auto;padding:18px 16px 24px}
+h1,h2,h3,.big{font-family:'Barlow Condensed',Impact,sans-serif;font-weight:800;line-height:1}
+h2{font-size:26px;margin:18px 0 10px}h3{font-size:19px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.logo{width:36px;height:36px;border-radius:50%;background:var(--r);display:grid;place-items:center;font:800 22px 'Barlow Condensed',sans-serif}
+.mut{color:var(--g);font-size:13px}
+.stub{position:relative;border-radius:20px;padding:20px;background:radial-gradient(circle at 85% 0,#d3213a55,transparent 55%),repeating-linear-gradient(90deg,#ffffff08 0 28px,transparent 28px 56px),linear-gradient(160deg,var(--b2),var(--b1))}
+.stub:after{content:"";position:absolute;left:-10px;right:-10px;bottom:62px;border-top:2px dashed #ffffff30}
+.stub .big{font-size:44px;margin:10px 0 6px}
+.cd{display:flex;gap:8px;margin:12px 0 44px}.cd b{background:#0006;border-radius:8px;padding:6px 10px;font:800 22px 'Barlow Condensed'}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.btn{border:0;border-radius:12px;padding:13px;font:600 15px Inter;color:#fff;background:var(--r);cursor:pointer;width:100%}
+.btn.s{background:#ffffff18}.btn:focus-visible,.card:focus-visible,.nv:focus-visible{outline:2px solid #fff}
+.card{background:var(--b1);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;cursor:pointer;border:1px solid #ffffff10;width:100%;color:inherit;text-align:left;font:inherit}
+.card .big{font-size:24px}.dt{min-width:54px;text-align:center;background:var(--b2);border-radius:10px;padding:8px 4px;font:800 15px 'Barlow Condensed'}
+.tag{font-size:12px;padding:3px 9px;border-radius:20px;background:#2fd27a22;color:var(--ok);white-space:nowrap}.tag.h{background:#e5243b33;color:#ff8d99}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:10px}.info div{background:var(--b1);border-radius:12px;padding:12px}.info b{display:block;font-size:13px;color:var(--g);font-weight:600}
+.alert{background:#e5243b22;border-left:4px solid var(--r);border-radius:10px;padding:12px;margin:12px 0;font-size:14px}
+svg.map{width:100%}.st{fill:var(--b2);stroke:#ffffff30;cursor:pointer}.st.on{fill:var(--r)}.map text{fill:#fff;font:600 10px Inter;pointer-events:none;text-anchor:middle}
+.stp{display:flex;align-items:center;gap:14px}.stp button{width:38px;height:38px;border-radius:50%;border:0;background:var(--b2);color:#fff;font-size:20px;cursor:pointer}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #ffffff25;background:var(--b1);color:#fff;margin:4px 0 10px;font:inherit}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.chip{padding:9px 14px;border-radius:20px;background:var(--b1);cursor:pointer;border:1px solid #ffffff20;color:#fff;font:inherit;font-size:14px}.chip.on{background:var(--r);border-color:var(--r)}
+.sum{display:flex;justify-content:space-between;padding:6px 0}.sum.t{font:800 24px 'Barlow Condensed';border-top:1px solid #ffffff20;margin-top:6px;padding-top:12px}
+.qr{width:170px;display:block;margin:12px auto;border-radius:10px}.tk{background:var(--b1);border-radius:18px;padding:16px;margin-bottom:14px;text-align:center}
+details{background:var(--b1);border-radius:12px;padding:12px;margin-bottom:8px}summary{cursor:pointer;font-weight:600}details p{margin-top:8px;color:var(--g);font-size:14px}
+nav{display:flex;background:#050d24;border-top:1px solid #ffffff12}.nv{flex:1;border:0;background:none;color:var(--g);padding:11px 0 13px;font:600 12px Inter;cursor:pointer}.nv.on{color:#fff;box-shadow:inset 0 3px var(--r)}
+.back{background:none;border:0;color:var(--g);cursor:pointer;margin-bottom:10px;font:inherit}
+.note{font-size:11px;color:var(--g);text-align:center;margin-top:14px}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.pr{background:var(--b1);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px}.im{height:96px;border-radius:10px;display:grid;place-items:center;font-size:44px}</style></head><body>
+<div class="ph"><div id="scr"></div>
+<nav id="nav"></nav></div>
+<script>
+const M=[{o:'Palestino',d:'Sáb 17 oct',h:'18:00',t:'Entradas disponibles',x:0},{o:'Huachipato',d:'Dom 1 nov',h:'20:30',t:'Últimas entradas',x:1},{o:'Colo-Colo',d:'Sáb 14 nov',h:'18:00',t:'Alta demanda',x:1}];
+const S0=[{k:'p',n:'Tribuna Pacífico',p:35000},{k:'a',n:'Tribuna Andes',p:25000},{k:'n',n:'Galería Norte',p:12000},{k:'s',n:'Galería Sur',p:12000}];
+const $=n=>'$'+n.toLocaleString('es-CL');
+let S={v:'home',m:0,k:'a',q:2,pay:'Tarjeta',tk:[],c:{},ms:0};
+const P=[{n:'Camiseta local',p:39990,e:'👕',b:'#13306f'},{n:'Polerón azul',p:44990,e:'🧥',b:'#0b1f52'},{n:'Bufanda hincha',p:12990,e:'🧣',b:'#9b1526'},{n:'Gorro oficial',p:15990,e:'🧢',b:'#13306f'}];
+function qr(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;const r=()=>(h=(h*1103515245+12345)>>>0,h>>16&1);let o='';for(let y=0;y<21;y++)for(let x=0;x<21;x++){const f=(x<7&&y<7)||(x>13&&y<7)||(x<7&&y>13);let on;if(f){const a=x>13?x-14:x,b=y>13?y-14:y;on=a==0||a==6||b==0||b==6||(a>1&&a<5&&b>1&&b<5)}else on=r();if(on)o+=`<rect x="${x}" y="${y}" width="1" height="1"/>`}return `<svg viewBox="-1 -1 23 23" class="qr" role="img" aria-label="Código QR de ejemplo"><rect x="-1" y="-1" width="23" height="23" fill="#fff"/><g fill="#0a1a45">${o}</g></svg>`}
+const go=(v,m)=>{S.v=v;S.ms=0;if(m!==undefined)S.m=m;draw();document.getElementById('scr').scrollTop=0};
+const sec=()=>S0.find(x=>x.k==S.k);
+const list=()=>M.map((m,i)=>`<button class="card" onclick="go('det',${i})"><div class="dt">${m.d.split(' ').slice(1).join('<br>')}</div><div style="flex:1"><h3>vs. ${m.o}</h3><div class="mut">${m.d} · ${m.h} · Estadio Nacional</div></div><span class="tag ${m.x?'h':''}">${m.t}</span></button>`).join('');
+const V={
+home:()=>`<div class="top"><div class="logo">U</div><div><h3>AzulPass</h3><div class="mut">Tu entrada y tu partido, en un solo lugar</div></div></div>
+<div class="stub"><span class="tag">Próximo partido</span><div class="big">U de Chile<br>vs. ${M[0].o}</div><div class="mut">${M[0].d} · ${M[0].h} · Estadio Nacional</div>
+<div class="cd"><b>12 d</b><b>04 h</b><b>31 m</b></div><div class="row"><button class="btn" onclick="S.m=0;go('sec')">Comprar entradas</button><button class="btn s" onclick="go('det',0)">Ver info</button></div></div>
+<h2>Antes de ir al estadio</h2><div class="info"><div><b>Puertas abren</b>2 h antes</div><div><b>Cómo llegar</b>Metro L6 Estadio Nacional</div><div><b>Debes llevar</b>Entrada QR y cédula</div><div><b>Último aviso</b>Sin cambios de horario</div></div>
+<h2>Próximos partidos</h2>${list()}<p class="note">Prototipo con datos de ejemplo. No es la app oficial del club.</p>`,
+list:()=>`<h2 style="margin-top:0">Partidos</h2>${list()}`,
+det:()=>{const m=M[S.m];return `<button class="back" onclick="go('home')">‹ Volver</button><div class="stub"><div class="mut">Local</div><div class="big">U de Chile<br>vs. ${m.o}</div><div class="mut">${m.d} · ${m.h} h</div><div style="height:46px"></div><button class="btn" onclick="go('sec')">Elegir entradas</button></div>
+<h2>Todo lo que necesitas saber</h2><div class="info"><div><b>Dónde</b>Estadio Nacional, Ñuñoa</div><div><b>Puertas</b>${m.h=='18:00'?'16:00':'18:30'} h</div><div><b>Metro</b>L6, estación Estadio Nacional</div><div><b>Ingreso</b>Entrada nominativa + cédula</div></div>
+<div class="alert"><b>Importante:</b> cada entrada queda a nombre del asistente. Ingresa su RUT al comprar para evitar problemas en el acceso.</div>
+<details><summary>¿Qué no puedo llevar?</summary><p>Objetos prohibidos y bolsos grandes. El detalle oficial aparece aquí antes de cada partido.</p></details><details><summary>¿Cómo llego en auto?</summary><p>Mapa de estacionamientos cercanos y calles cerradas, actualizado por partido.</p></details>`},
+sec:()=>{const m=M[S.m],s=sec(),r=(k,x,y,w,h)=>`<rect class="st ${S.k==k?'on':''}" x="${x}" y="${y}" width="${w}" height="${h}" rx="10" onclick="S.k='${k}';draw()"/>`;return `<button class="back" onclick="go('det')">‹ Volver</button><h2 style="margin-top:0">¿Dónde quieres verlo?</h2><div class="mut">vs. ${m.o} · ${m.d} · Toca un sector</div>
+<svg class="map" viewBox="0 0 300 220" role="img" aria-label="Mapa de sectores">${r('p',60,12,180,38)}${r('a',60,170,180,38)}${r('n',10,50,48,120)}${r('s',242,50,48,120)}<rect x="70" y="60" width="160" height="100" rx="8" fill="#1d7a46"/><circle cx="150" cy="110" r="18" fill="none" stroke="#fff6"/><path d="M150 60v100" stroke="#fff6"/><text x="150" y="35">Pacífico</text><text x="150" y="193">Andes</text><text x="34" y="113">Norte</text><text x="266" y="113">Sur</text></svg>
+<div class="card" style="cursor:default"><div style="flex:1"><h3>${s.n}</h3><div class="mut">${$(s.p)} por entrada</div></div><div class="stp"><button onclick="S.q=Math.max(1,S.q-1);draw()" aria-label="Menos">−</button><b>${S.q}</b><button onclick="S.q=Math.min(6,S.q+1);draw()" aria-label="Más">+</button></div></div>
+<div class="sum t"><span>Total</span><span>${$(s.p*S.q)}</span></div><button class="btn" onclick="go('pay')">Continuar con ${S.q} entrada${S.q>1?'s':''}</button>`},
+pay:()=>{const s=sec();let a='';for(let i=1;i<=S.q;i++)a+=`<label class="mut">RUT del asistente ${i}</label><input placeholder="12.345.678-9" inputmode="text">`;const fee=S.q*1000;return `<button class="back" onclick="go('sec')">‹ Volver</button><h2 style="margin-top:0">Tus datos</h2>${a}
+<label class="mut">Forma de pago</label><div class="chips">${['Tarjeta','Débito','Transferencia'].map(p=>`<button class="chip ${S.pay==p?'on':''}" onclick="S.pay='${p}';draw()">${p}</button>`).join('')}</div>
+<div class="sum"><span>${S.q} × ${s.n}</span><span>${$(s.p*S.q)}</span></div><div class="sum"><span>Cargo por servicio</span><span>${$(fee)}</span></div><div class="sum t"><span>Total</span><span>${$(s.p*S.q+fee)}</span></div>
+<button class="btn" onclick="buy()">Pagar ${$(s.p*S.q+fee)}</button><p class="note">Pago simulado, no se cobra nada.</p>`},
+ok:()=>{const t=S.tk[0];return `<div style="text-align:center;padding-top:10px"><div class="logo" style="margin:0 auto 10px;background:var(--ok)">✓</div><h1 style="font-size:34px">¡Listo, nos vemos en la cancha!</h1><p class="mut" style="margin:8px 0">Enviamos tus ${t.q} entrada${t.q>1?'s':''} al correo y quedaron guardadas aquí.</p></div><div class="tk"><h3>U de Chile vs. ${t.o}</h3><div class="mut">${t.d} · ${t.h} · ${t.n}</div>${qr(t.c)}<div class="mut">Código ${t.c}</div></div><button class="btn" onclick="go('tk')">Ver mis entradas</button>`},
+tk:()=>`<h2 style="margin-top:0">Mis entradas</h2>`+(S.tk.length?S.tk.map(t=>`<div class="tk"><h3>U de Chile vs. ${t.o}</h3><div class="mut">${t.d} · ${t.h} · ${t.n} · ${t.q} entrada${t.q>1?'s':''}</div>${qr(t.c)}<div class="mut">Código ${t.c}</div></div>`).join(''):`<div class="card" style="cursor:default"><div>Aún no tienes entradas.<div class="mut">Elige un partido y compra en menos de 2 minutos.</div></div></div><button class="btn" onclick="go('list')">Ver partidos</button>`),
+shop:()=>{const n=Object.values(S.c).reduce((a,b)=>a+b,0),t=P.reduce((a,p,i)=>a+p.p*(S.c[i]||0),0);return `<h2 style="margin-top:0">Tienda oficial</h2><div class="mut">Camisetas y más, con envío a todo Chile</div><div class="pg">${P.map((p,i)=>`<div class="pr"><div class="im" style="background:${p.b}">${p.e}</div><b>${p.n}</b><div class="mut">${$(p.p)}</div><button class="btn s" onclick="S.c[${i}]=(S.c[${i}]||0)+1;draw()">Agregar${S.c[i]?' ('+S.c[i]+')':''}</button></div>`).join('')}</div>${n?`<div class="sum t"><span>${n} producto${n>1?'s':''}</span><span>${$(t)}</span></div><button class="btn" onclick="S.c={};S.ms=1;draw()">Pagar (simulado)</button>`:''}${S.ms?'<div class="alert">Pedido recibido. Te avisamos cuando salga a despacho.</div>':''}`},
+info:()=>`<h2 style="margin-top:0">Info del estadio</h2><div class="info"><div><b>Dirección</b>Av. Grecia, Ñuñoa</div><div><b>Metro</b>Línea 6</div></div><h2>Preguntas frecuentes</h2><details><summary>¿Puedo transferir mi entrada?</summary><p>Sí, cambiando el nombre del asistente hasta 24 h antes.</p></details><details><summary>¿Qué pasa si se suspende el partido?</summary><p>Te avisamos aquí y por correo, con las opciones de reembolso.</p></details><details><summary>¿Hay accesos para personas con movilidad reducida?</summary><p>Sí, se indican por partido en la ficha de información.</p></details>`
+};
+function buy(){const m=M[S.m],s=sec();S.tk.unshift({o:m.o,d:m.d,h:m.h,n:s.n,q:S.q,c:'AZ-'+(Math.random()*1e6|0).toString(36).toUpperCase().padStart(4,'X')});go('ok')}
+function draw(){const tab={home:'home',det:'list',sec:'list',pay:'list',list:'list',ok:'tk',tk:'tk',shop:'shop',info:'info'}[S.v];document.getElementById('scr').innerHTML=V[S.v]();
+document.getElementById('nav').innerHTML=[['home','Inicio'],['list','Partidos'],['shop','Tienda'],['tk','Entradas'+(S.tk.length?' ('+S.tk.length+')':'')],['info','Info']].map(([v,l])=>`<button class="nv ${tab==v?'on':''}" onclick="go('${v}')">${l}</button>`).join('')}
+draw();
+</script></body></html>
