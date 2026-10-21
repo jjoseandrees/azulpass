@@ -3,7 +3,6 @@ import '../../domain/repositories/match_repository.dart';
 import '../../data/datasources/mock/match_mock_datasources.dart';
 import '../models/match_model.dart';
 
-/// Implementa la interfaz del dominio usando nuestra fuente de datos Mock.
 class MatchRepositoryImpl implements MatchRepository {
   final MatchMockDataSource dataSource;
 

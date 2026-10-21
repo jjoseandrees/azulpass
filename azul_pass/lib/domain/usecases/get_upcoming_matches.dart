@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import '../entities/match_entity.dart';
 import '../repositories/match_repository.dart';
 
+@injectable
 class GetUpcomingMatches {
   final MatchRepository repository;
 
