@@ -8,6 +8,8 @@ class MatchModel {
   final String stadium;
   final String competition;
   final String status;
+  final List<String> requirements;
+  final List<String> salePhases;
 
   MatchModel({
     required this.id,
@@ -17,6 +19,8 @@ class MatchModel {
     required this.stadium,
     required this.competition,
     required this.status,
+    required this.requirements,
+    required this.salePhases,
   });
 
   /// Factory para crear el Model desde un JSON (simulando la respuesta de la API)
@@ -29,6 +33,8 @@ class MatchModel {
       stadium: json['stadium'] as String,
       competition: json['competition'] as String,
       status: json['status'] as String,
+      requirements: List<String>.from(json['requirements'] ?? []),
+      salePhases: List<String>.from(json['salePhases'] ?? []),
     );
   }
 
@@ -45,6 +51,8 @@ class MatchModel {
         (e) => e.name == status,
         orElse: () => MatchStatus.upcoming,
       ),
+      requirements: requirements,
+      salePhases: salePhases,
     );
   }
 }

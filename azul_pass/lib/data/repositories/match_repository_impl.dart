@@ -19,4 +19,19 @@ class MatchRepositoryImpl implements MatchRepository {
     // 3. Los traducimos a Entities de Dominio y los devolvemos
     return models.map((model) => model.toEntity()).toList();
   }
+
+  @override
+  Future<MatchEntity> getMatchById(String id) async {
+    // 1. Pedimos los datos crudos (JSON) del partido por ID
+    final json = await dataSource.getMatchById(id);
+    
+    // 2. Si no encontramos el partido, lanzamos una excepción
+    if (json == null) {
+      throw Exception('Match not found');
+    }
+    
+    // 3. Convertimos el JSON a Model y luego a Entity de Dominio
+    final model = MatchModel.fromJson(json);
+    return model.toEntity();
+  }
 }
