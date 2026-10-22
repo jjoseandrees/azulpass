@@ -5,6 +5,7 @@ import '../../presentation/features/matches/view/matches_screen.dart';
 import '../../presentation/features/tickets/view/tickets_screen.dart';
 import '../../presentation/features/info/view/info_screen.dart';
 import '../../presentation/features/shop/view/shop_screen.dart';
+import '../../presentation/features/matches/view/match_details_screen.dart';
 
 /// Configuración centralizada de rutas usando GoRouter
 final appRouter = GoRouter(
@@ -25,6 +26,17 @@ final appRouter = GoRouter(
           path: '/partidos',
           name: 'matches',
           builder: (context, state) => const MatchesScreen(),
+          routes: [
+            // Ruta anidada para detalles del partido
+            GoRoute(
+              path: ':id',
+              name: 'match_detail',
+              builder: (context, state) {
+                final matchId = state.pathParameters['id']!;
+                return MatchDetailScreen(matchId: matchId);
+              },
+            ),
+          ],
         ),
         GoRoute(
           path: '/entradas',

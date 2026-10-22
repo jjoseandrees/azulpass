@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../viewmodel/matches_viewmodel.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -58,7 +59,7 @@ class MatchesScreen extends ConsumerWidget {
                   ),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () {
-                    // Aquí podrías navegar a una pantalla de detalles del partido
+                    context.go('/partidos/${match.id}'); // Navegamos a la pantalla de detalles del partido
                   },
                 ),
               );
