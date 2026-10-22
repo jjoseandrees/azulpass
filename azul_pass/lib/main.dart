@@ -2,7 +2,7 @@
    import 'package:flutter_riverpod/flutter_riverpod.dart';
    import 'core/theme/app_theme.dart';
    import 'core/di/injection.dart';
-   import 'presentation/features/matches/view/matches_screen.dart';
+   import 'core/router/app_router.dart';
 
    void main() {
     WidgetsFlutterBinding.ensureInitialized();
@@ -17,10 +17,10 @@
      @override
      Widget build(BuildContext context,WidgetRef ref) {
        return ProviderScope(
-         child: MaterialApp(
+         child: MaterialApp.router(
            title: 'AzulPass',
            theme: AppTheme.lightTheme, // Aplicamos nuestro tema
-           home: const MatchesScreen(),
+           routerConfig: appRouter,
            debugShowCheckedModeBanner: false,
          ),
        );
