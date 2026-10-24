@@ -84,7 +84,7 @@ final appRouter = GoRouter(
         GoRoute(
           path: '/info',
           name: 'info',
-          builder: (context, state) => const InformationScreen(),
+          builder: (context, state) => const InfoScreen(),
         ),
       ],
     ),
