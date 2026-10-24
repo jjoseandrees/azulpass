@@ -242,7 +242,7 @@ class _RutInputFormatter extends TextInputFormatter {
       String rut = '';
       for (int i = 0; i < text.length - 1; i++) {
         if (i > 0 && (text.length - 1 - i) % 3 == 0) {
-          rut = '.$rut';
+          rut = '$rut.';
         }
         rut = '$rut${text[i]}';
       }
