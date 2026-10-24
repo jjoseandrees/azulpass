@@ -7,7 +7,7 @@ import '../../presentation/features/info/view/info_screen.dart';
 import '../../presentation/features/shop/view/shop_screen.dart';
 import '../../presentation/features/matches/view/match_details_screen.dart';
 import '../../presentation/features/tickets/view/sector_selection_screen.dart';
-import '../../presentation/features/matches/view/payment_screen.dart';
+import '../../presentation/features/tickets/view/buyer_data_screen.dart';
 
 /// Configuración centralizada de rutas usando GoRouter
 final appRouter = GoRouter(
@@ -48,13 +48,13 @@ final appRouter = GoRouter(
                   },
                 ),
                 GoRoute(
-                  path: 'pago',
-                  name: 'payment',
+                  path: 'datos',
+                  name: 'buyer_data',
                   builder: (context, state) {
                     final matchId = state.pathParameters['id']!;
-                    return PaymentScreen(matchId: matchId);
+                    return BuyerDataScreen(matchId: matchId);
                   },
-                ),
+                )
               ],
             ),
           ],

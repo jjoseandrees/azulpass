@@ -111,7 +111,7 @@ class SectorSelectionScreen extends ConsumerWidget {
                     label: 'Continuar',
                     icon: Icons.arrow_forward,
                     onPressed: selectedSector != null 
-                      ? () => context.push('/partidos/$matchId/sector') // Próximo paso
+                      ? () => context.push('/partidos/$matchId/datos') // Próximo paso
                       : null, // Se deshabilita si no hay sector seleccionado
                   ),
                 ],
