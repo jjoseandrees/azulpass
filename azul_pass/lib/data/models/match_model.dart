@@ -1,4 +1,5 @@
 import '../../domain/entities/match_entity.dart';
+import '../../data/models/sector_model.dart';
 
 class MatchModel {
   final String id;
@@ -10,6 +11,7 @@ class MatchModel {
   final String status;
   final List<String> requirements;
   final List<String> salePhases;
+  final List<Map<String, dynamic>> sectors;
 
   MatchModel({
     required this.id,
@@ -21,6 +23,7 @@ class MatchModel {
     required this.status,
     required this.requirements,
     required this.salePhases,
+    required this.sectors,
   });
 
   /// Factory para crear el Model desde un JSON (simulando la respuesta de la API)
@@ -35,6 +38,7 @@ class MatchModel {
       status: json['status'] as String,
       requirements: List<String>.from(json['requirements'] ?? []),
       salePhases: List<String>.from(json['salePhases'] ?? []),
+      sectors: List<Map<String, dynamic>>.from(json['sectors'] ?? []),
     );
   }
 
@@ -53,6 +57,7 @@ class MatchModel {
       ),
       requirements: requirements,
       salePhases: salePhases,
+      availableSectors: sectors.map((s) => SectorModel.fromJson(s).toEntity()).toList()
     );
   }
 }

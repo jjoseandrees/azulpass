@@ -127,10 +127,20 @@ class MatchDetailScreen extends ConsumerWidget {
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)
           ),
           const SizedBox(height: 8),
-          Chip(
-            label: Text(match.competition),
-            backgroundColor: Colors.white.withValues(alpha: 0.2),
-            labelStyle: const TextStyle(color: Colors.white),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              match.competition,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                ),
+            )
           )
         ],
       ),

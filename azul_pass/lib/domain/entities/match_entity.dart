@@ -11,7 +11,7 @@ class MatchEntity extends Equatable {
   final MatchStatus status;
   final List<String> requirements; // Lista de requisitos para este partido (ej: "VIP", "General", "Menores de 18")
   final List<String> salePhases; // Lista de fases de venta disponibles para este partido
-  final List<SectorEntity> avalaibleSectors; // Lista de sectores disponibles para este partido
+  final List<SectorEntity> availableSectors; // Lista de sectores disponibles para este partido
 
   const MatchEntity({
     required this.id,
@@ -23,7 +23,7 @@ class MatchEntity extends Equatable {
     this.status = MatchStatus.upcoming,
     this.requirements = const [],
     this.salePhases = const [],
-    this.avalaibleSectors = const [],
+    this.availableSectors = const [],
   });
 
   @override
@@ -37,7 +37,7 @@ class MatchEntity extends Equatable {
         status,
         requirements,
         salePhases,
-        avalaibleSectors,
+        availableSectors,
       ];
 }
 

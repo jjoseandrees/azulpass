@@ -6,6 +6,8 @@ import '../../presentation/features/tickets/view/tickets_screen.dart';
 import '../../presentation/features/info/view/info_screen.dart';
 import '../../presentation/features/shop/view/shop_screen.dart';
 import '../../presentation/features/matches/view/match_details_screen.dart';
+import '../../presentation/features/tickets/view/sector_selection_screen.dart';
+import '../../presentation/features/matches/view/payment_screen.dart';
 
 /// Configuración centralizada de rutas usando GoRouter
 final appRouter = GoRouter(
@@ -35,6 +37,25 @@ final appRouter = GoRouter(
                 final matchId = state.pathParameters['id']!;
                 return MatchDetailScreen(matchId: matchId);
               },
+              routes: [
+                // Ruta anidada para selección de sector
+                GoRoute(
+                  path: 'sector',
+                  name: 'sector_selection',
+                  builder: (context, state) {
+                    final matchId = state.pathParameters['id']!;
+                    return SectorSelectionScreen(matchId: matchId);
+                  },
+                ),
+                GoRoute(
+                  path: 'pago',
+                  name: 'payment',
+                  builder: (context, state) {
+                    final matchId = state.pathParameters['id']!;
+                    return PaymentScreen(matchId: matchId);
+                  },
+                ),
+              ],
             ),
           ],
         ),
