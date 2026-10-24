@@ -1,3 +1,4 @@
+import 'package:azul_pass/domain/entities/buyer_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../presentation/features/home/view/home_screen.dart';
@@ -8,6 +9,7 @@ import '../../presentation/features/shop/view/shop_screen.dart';
 import '../../presentation/features/matches/view/match_details_screen.dart';
 import '../../presentation/features/tickets/view/sector_selection_screen.dart';
 import '../../presentation/features/tickets/view/buyer_data_screen.dart';
+import '../../presentation/features/tickets/view/payment_screen.dart';
 
 /// Configuración centralizada de rutas usando GoRouter
 final appRouter = GoRouter(
@@ -54,7 +56,17 @@ final appRouter = GoRouter(
                     final matchId = state.pathParameters['id']!;
                     return BuyerDataScreen(matchId: matchId);
                   },
-                )
+                ),
+                GoRoute(
+                  path: 'pago',
+                  name: 'payment',
+                  builder: (context, state) {
+                    final matchId = state.pathParameters['id']!;
+                    final buyer = state.extra as BuyerEntity; // Recibimos los datos del comprador
+
+                    return PaymentScreen(matchId: matchId, buyer: buyer);
+                  },
+                ),
               ],
             ),
           ],

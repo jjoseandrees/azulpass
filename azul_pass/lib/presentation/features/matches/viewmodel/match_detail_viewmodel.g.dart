@@ -64,7 +64,7 @@ final class MatchDetailProvider
   }
 }
 
-String _$matchDetailHash() => r'0b0a091848545748e4d1c9f7cdc502e603099948';
+String _$matchDetailHash() => r'f76d2551d59922e4451991817dd4566d94b82b54';
 
 final class MatchDetailFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<MatchEntity>, String> {

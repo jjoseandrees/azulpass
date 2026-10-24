@@ -2,6 +2,9 @@ import 'package:injectable/injectable.dart';
 import '../../data/datasources/mock/match_mock_datasources.dart';
 import '../../data/repositories/match_repository_impl.dart';
 import '../../domain/repositories/match_repository.dart';
+import '../../domain/repositories/ticket_repository.dart';
+import '../../domain/repositories/ticket_repository_impl.dart';
+import '../../domain/usecases/process_payment.dart';
 
 /// Módulo de inyección: Aquí registramos manualmente las dependencias
 /// que Injectable no puede resolver automáticamente (como las interfaces).
@@ -17,4 +20,10 @@ abstract class InjectionModule {
   @lazySingleton
   MatchRepository get matchRepository => 
       MatchRepositoryImpl(matchMockDataSource);
+  
+  @lazySingleton
+  TicketRepository get ticketRepository => TicketRepositoryImpl();
+
+  @lazySingleton
+  ProcessPayment get processPayment => ProcessPayment(ticketRepository);
 }
