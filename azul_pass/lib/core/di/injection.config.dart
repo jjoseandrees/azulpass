@@ -17,6 +17,7 @@ import 'package:azul_pass/domain/repositories/match_repository.dart' as _i274;
 import 'package:azul_pass/domain/repositories/ticket_repository.dart' as _i169;
 import 'package:azul_pass/domain/usecases/get_match_by_id.dart' as _i813;
 import 'package:azul_pass/domain/usecases/get_upcoming_matches.dart' as _i267;
+import 'package:azul_pass/domain/usecases/get_user_tickets.dart' as _i986;
 import 'package:azul_pass/domain/usecases/process_payment.dart' as _i336;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -38,14 +39,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i169.TicketRepository>(
       () => injectionModule.ticketRepository,
     );
-    gh.lazySingleton<_i336.ProcessPayment>(
-      () => injectionModule.processPayment,
-    );
     gh.factory<_i813.GetMatchById>(
       () => _i813.GetMatchById(gh<_i274.MatchRepository>()),
     );
     gh.factory<_i267.GetUpcomingMatches>(
       () => _i267.GetUpcomingMatches(gh<_i274.MatchRepository>()),
+    );
+    gh.factory<_i986.GetUserTickets>(
+      () => _i986.GetUserTickets(gh<_i169.TicketRepository>()),
+    );
+    gh.factory<_i336.ProcessPayment>(
+      () => _i336.ProcessPayment(gh<_i169.TicketRepository>()),
     );
     return this;
   }

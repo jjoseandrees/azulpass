@@ -1,8 +1,10 @@
+import 'package:injectable/injectable.dart';
 import '../entities/buyer_entity.dart';
 import '../entities/sector_entity.dart';
 import '../entities/ticket_entity.dart';
 import '../repositories/ticket_repository.dart';
 
+@injectable
 class ProcessPayment {
   final TicketRepository repository;
   ProcessPayment(this.repository);

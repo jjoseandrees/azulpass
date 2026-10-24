@@ -10,4 +10,7 @@ abstract class TicketRepository {
     required int quantity,
     required BuyerEntity buyer,
   });
+
+  /// Retorna la lista de entradas del usuario.
+  Future<List<TicketEntity>> getUserTickets();
 }
