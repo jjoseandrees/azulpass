@@ -15,9 +15,13 @@ import 'package:azul_pass/data/datasources/mock/info_mock_datasource.dart'
     as _i626;
 import 'package:azul_pass/data/datasources/mock/match_mock_datasources.dart'
     as _i246;
+import 'package:azul_pass/data/datasources/mock/shop_mock_datasource.dart'
+    as _i999;
 import 'package:azul_pass/domain/repositories/info_repository.dart' as _i178;
 import 'package:azul_pass/domain/repositories/match_repository.dart' as _i274;
+import 'package:azul_pass/domain/repositories/shop_repository.dart' as _i792;
 import 'package:azul_pass/domain/repositories/ticket_repository.dart' as _i169;
+import 'package:azul_pass/domain/usecases/get_catalog.dart' as _i317;
 import 'package:azul_pass/domain/usecases/get_faqs.dart' as _i21;
 import 'package:azul_pass/domain/usecases/get_match_by_id.dart' as _i813;
 import 'package:azul_pass/domain/usecases/get_stadium_info.dart' as _i333;
@@ -50,6 +54,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i178.InfoRepository>(
       () => injectionModule.infoRepository,
     );
+    gh.lazySingleton<_i999.ShopMockDataSource>(
+      () => injectionModule.shopMockDataSource,
+    );
+    gh.lazySingleton<_i792.ShopRepository>(
+      () => injectionModule.shopRepository,
+    );
     gh.factory<_i21.GetFAQs>(() => _i21.GetFAQs(gh<_i178.InfoRepository>()));
     gh.factory<_i333.GetStadiumInfo>(
       () => _i333.GetStadiumInfo(gh<_i178.InfoRepository>()),
@@ -65,6 +75,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i336.ProcessPayment>(
       () => _i336.ProcessPayment(gh<_i169.TicketRepository>()),
+    );
+    gh.factory<_i317.GetCatalog>(
+      () => _i317.GetCatalog(gh<_i792.ShopRepository>()),
     );
     return this;
   }

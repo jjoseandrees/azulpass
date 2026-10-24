@@ -8,6 +8,9 @@ import '../../domain/repositories/ticket_repository.dart';
 import '../../data/datasources/mock/info_mock_datasource.dart';
 import '../../data/repositories/info_repository_impl.dart';
 import '../../domain/repositories/info_repository.dart';
+import '../../data/datasources/mock/shop_mock_datasource.dart';
+import '../../data/repositories/shop_repository_impl.dart';
+import '../../domain/repositories/shop_repository.dart';
 
 final getIt = GetIt.instance;
 
@@ -30,4 +33,10 @@ abstract class InjectionModule {
   @lazySingleton
   InfoRepository get infoRepository => InfoRepositoryImpl(infoMockDataSource);
   
+  @lazySingleton
+  ShopMockDataSource get shopMockDataSource => ShopMockDataSource();
+
+  @lazySingleton
+  ShopRepository get shopRepository => ShopRepositoryImpl(shopMockDataSource);
+
 }

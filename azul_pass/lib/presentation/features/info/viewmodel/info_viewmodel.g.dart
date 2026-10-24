@@ -48,7 +48,7 @@ final class StadiumInfoProvider
   }
 }
 
-String _$stadiumInfoHash() => r'58087ec4752b90c1d8813fbf62c59d2198ffa638';
+String _$stadiumInfoHash() => r'ba5a83f826f9d95188a9b700f3e05ef9c050224d';
 
 @ProviderFor(faqs)
 final faqsProvider = FaqsProvider._();
@@ -87,4 +87,4 @@ final class FaqsProvider
   }
 }
 
-String _$faqsHash() => r'855c5731a3de1f0e07f13f92abf87bf19600922d';
+String _$faqsHash() => r'3f37b54d9fd33d983c141a90cf5daf27a67803a7';
