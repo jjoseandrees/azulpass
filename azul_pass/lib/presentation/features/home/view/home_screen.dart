@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/quick_access_card.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../matches/viewmodel/matches_viewmodel.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final matchesAsync = ref.watch(matchesProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -18,6 +23,9 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Notificaciones en desarrollo')),
+              );
             },
           ),
         ],
@@ -27,34 +35,35 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Banner destacado
             _buildBanner(context),
             const SizedBox(height: 24),
-            
-            // Accesos rápidos
-            const Text(
-              'Accesos rápidos',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-            ),
+            const Text('Accesos rápidos', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),),
             const SizedBox(height: 12),
             _buildQuickAccessGrid(context),
             const SizedBox(height: 24),
-            
-            // Próximo partido destacado
-            const Text(
-              'Próximo partido',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-            ),
+
+            const Text('Próximo partido', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),),
             const SizedBox(height: 12),
-            _buildNextMatchCard(context),
+
+            matchesAsync.when(
+              loading: () => const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(32.0),
+                  child: CircularProgressIndicator(color: AppColors.primaryBlue,),
+                ),
+              ),
+              error: (err, _) => Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                child: Text('Error al cargar próximos partidos: $err', style: const TextStyle(color: AppColors.error)),
+              ),
+              data: (matches){
+                if (matches.isEmpty){
+                  return const _EmptyMatchesCard();
+                }
+                return _buildNextMatchCard(context, matches.first);
+              },
+            ),
           ],
         ),
       ),
@@ -140,65 +149,73 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildNextMatchCard(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: AppColors.primaryBlue.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
+  // Cambia la firma para recibir el MatchEntity
+  Widget _buildNextMatchCard(BuildContext context, dynamic match) {
+    // Formateamos la fecha de forma elegante
+    final dateStr = '${match.matchDate.day} Oct ${match.matchDate.year} - ${match.matchDate.hour.toString().padLeft(2, '0')}:${match.matchDate.minute.toString().padLeft(2, '0')}';
+
+    return GestureDetector(
+      onTap: () => context.go('/partidos/${match.id}'),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 4)),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: AppColors.primaryBlue.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.sports_soccer, color: AppColors.primaryBlue, size: 32),
             ),
-            child: const Icon(
-              Icons.sports_soccer,
-              color: AppColors.primaryBlue,
-              size: 32,
-            ),
-          ),
-          const SizedBox(width: 16),
-          const Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'U vs Everton',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${match.homeTeam} vs ${match.awayTeam}',
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
                   ),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  '26 Oct 2026 - 19:00',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textSecondary,
+                  const SizedBox(height: 4),
+                  Text(
+                    dateStr,
+                    style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.chevron_right),
-            onPressed: () => context.go('/partidos'),
-          ),
-        ],
+            const Icon(Icons.chevron_right, color: AppColors.primaryBlue),
+          ],
+        ),
       ),
     );
   }
 }
+
+class _EmptyMatchesCard extends StatelessWidget {
+  const _EmptyMatchesCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(12)),
+      child: const Row(
+        children: [
+          Icon(Icons.calendar_today, color: AppColors.textSecondary),
+          SizedBox(width: 12),
+          Text('No hay partidos programados por ahora.', style: TextStyle(color: AppColors.textSecondary)),
+          ],
+        ),
+      );
+    }
+  }
