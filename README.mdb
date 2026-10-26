@@ -10,12 +10,11 @@ Para el hincha de la U que se complica comprando su entrada y no sabe a qué hor
 
 | Nombre | Usuario de GitHub | Rol |
 |---|---|---|
-| [Jose Garcia] | [@jjoseandrees] | Coordinación, codigo |
-| [Vicente Oyarzun] | [@VicenteO0709] | Documento, codigo |
+| [Jose Garcia] | [@jjoseandrees] | Coordinación, documento|
+| [Vicente Oyarzun] | [@VicenteO0709] | Repositorio, codigo |
 
 ## Enlaces
 
-- **Prototipo navegable:** https://claude.ai/artifact/7XveH55DKzDSRKxqoQFRdL
 - **Respaldo del prototipo:** [prototipo/azulpass_prototipo.html](prototipo/azulpass_prototipo.html) (descargar y abrir en el navegador)
 - **Documento de propuesta (PDF):** [docs/AzulPass_Propuesta_Hito1.pdf](docs/AzulPass_Propuesta_Hito1.pdf)
 - **Láminas de la presentación (PDF):** [docs/Laminas_Hito1.pdf](docs/Laminas_Hito1.pdf)
@@ -47,9 +46,9 @@ El Hito 1 no necesita instalación: el prototipo se abre en el navegador. Las in
 
 ## Tecnologías previstas
 
-- **Cliente:** aplicación web de página única con React.
-- **Servidor:** monolito en tres capas (API, negocio y datos) con Node.js y Express.
-- **Base de datos:** PostgreSQL.
+Cliente: aplicación Flutter (Dart) para celular y web.
+Servidor: monolito en tres capas (API, negocio y datos) con Node.js y Express.
+Base de datos: PostgreSQL.
 
 ## Estado del proyecto
 
