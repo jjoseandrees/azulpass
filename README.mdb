@@ -9,24 +9,17 @@ Para el hincha de la U que se complica comprando su entrada y no sabe a qué hor
 ## Integrantes
 
 | Nombre | Usuario de GitHub | Rol |
-|---|---|---|
 | [Jose Garcia] | [@jjoseandrees] | Coordinación, documento|
 | [Vicente Oyarzun] | [@VicenteO0709] | Repositorio, codigo |
 
 ## Enlaces
 
-- **Respaldo del prototipo:** [prototipo/azulpass_prototipo.html](prototipo/azulpass_prototipo.html) (descargar y abrir en el navegador)
+- **Respaldo de primer prototipo para presentación (No oficical):** [prototipo/azulpass_prototipo.html](prototipo/azulpass_prototipo.html) (descargar y abrir en el navegador)
 - **Documento de propuesta (PDF):** [docs/AzulPass_Propuesta_Hito1.pdf](docs/AzulPass_Propuesta_Hito1.pdf)
 - **Láminas de la presentación (PDF):** [docs/Laminas_Hito1.pdf](docs/Laminas_Hito1.pdf)
 - **Mapa del producto:** [docs/mapa_del_producto.png](docs/mapa_del_producto.png)
 - **Diagrama de arquitectura:** [docs/diagrama_de_arquitectura.png](docs/diagrama_de_arquitectura.png)
 - **Video promocional:** se agrega en el Hito 3.
-
-## Cómo ver el prototipo
-
-1. Abre el enlace del prototipo en cualquier navegador, desde el celular o el computador.
-2. Recorre la compra: **Inicio → Partidos → ficha del partido → elegir sector → datos y pago → entrada con QR**.
-3. Si el enlace no abre, descarga `prototipo/azulpass_prototipo.html` y ábrelo con doble clic.
 
 Los datos (rivales, fechas, precios y sectores) son de ejemplo. AzulPass no es la aplicación oficial de ningún club.
 
