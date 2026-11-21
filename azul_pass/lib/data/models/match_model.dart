@@ -26,21 +26,20 @@ class MatchModel {
     required this.sectors,
   });
 
-  /// Factory para crear el Model desde un JSON (simulando la respuesta de la API)
-  factory MatchModel.fromJson(Map<String, dynamic> json) {
-    return MatchModel(
-      id: json['id'] as String,
-      homeTeam: json['homeTeam'] as String,
-      awayTeam: json['awayTeam'] as String,
-      matchDate: json['matchDate'] as String,
-      stadium: json['stadium'] as String,
-      competition: json['competition'] as String,
-      status: json['status'] as String,
-      requirements: List<String>.from(json['requirements'] ?? []),
-      salePhases: List<String>.from(json['salePhases'] ?? []),
-      sectors: List<Map<String, dynamic>>.from(json['sectors'] ?? []),
-    );
-  }
+factory MatchModel.fromJson(Map<String, dynamic> json) {
+  return MatchModel(
+    id: json['id']?.toString() ?? '',
+    homeTeam: json['homeTeam'] ?? json['home_team'] ?? '',
+    awayTeam: json['awayTeam'] ?? json['away_team'] ?? '',
+    matchDate: json['matchDate'] ?? json['match_date'] ?? '',
+    stadium: json['stadium'] ?? '',
+    competition: json['competition'] ?? '',
+    status: json['status'] ?? 'upcoming',
+    requirements: List<String>.from(json['requirements'] ?? []),
+    salePhases: List<String>.from(json['salePhases'] ?? json['sale_phases'] ?? []),
+    sectors: List<Map<String, dynamic>>.from(json['availableSectors'] ?? json['sectors'] ?? []),
+  );
+}
 
   /// Metodo clave: Traduce el Model (Data) a la Entity (Dominio)
   MatchEntity toEntity() {

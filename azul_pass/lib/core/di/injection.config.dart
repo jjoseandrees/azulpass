@@ -13,10 +13,10 @@
 import 'package:azul_pass/core/di/injection_module.dart' as _i856;
 import 'package:azul_pass/data/datasources/mock/info_mock_datasource.dart'
     as _i626;
-import 'package:azul_pass/data/datasources/mock/match_mock_datasources.dart'
-    as _i246;
 import 'package:azul_pass/data/datasources/mock/shop_mock_datasource.dart'
     as _i999;
+import 'package:azul_pass/data/datasources/remote/match_remote_datasources.dart'
+    as _i845;
 import 'package:azul_pass/domain/repositories/info_repository.dart' as _i178;
 import 'package:azul_pass/domain/repositories/match_repository.dart' as _i274;
 import 'package:azul_pass/domain/repositories/shop_repository.dart' as _i792;
@@ -29,6 +29,7 @@ import 'package:azul_pass/domain/usecases/get_upcoming_matches.dart' as _i267;
 import 'package:azul_pass/domain/usecases/get_user_tickets.dart' as _i986;
 import 'package:azul_pass/domain/usecases/process_payment.dart' as _i336;
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -39,8 +40,9 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final injectionModule = _$InjectionModule();
-    gh.lazySingleton<_i246.MatchMockDataSource>(
-      () => injectionModule.matchMockDataSource,
+    gh.lazySingleton<_i519.Client>(() => injectionModule.httpClient);
+    gh.lazySingleton<_i845.MatchRemoteDataSource>(
+      () => injectionModule.matchRemoteDataSource,
     );
     gh.lazySingleton<_i274.MatchRepository>(
       () => injectionModule.matchRepository,
