@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import '../../data/datasources/mock/info_mock_datasource.dart';
 import '../../data/datasources/mock/shop_mock_datasource.dart';
 import '../../data/datasources/remote/match_remote_datasources.dart';
+import '../../data/datasources/remote/ticket_remote_datasources.dart';
+import '../../data/datasources/remote/auth_remote_datasource.dart';
 
 // 2. Implementaciones de Repositorios
 import '../../data/repositories/info_repository_impl.dart';
@@ -46,7 +48,17 @@ abstract class InjectionModule {
 
   // Entradas
   @lazySingleton
-  TicketRepository get ticketRepository => TicketRepositoryImpl();
+  TicketRemoteDataSource get ticketRemoteDataSource =>
+   TicketRemoteDataSource(client: getIt<http.Client>());
+
+  @lazySingleton
+  TicketRepository get ticketRepository =>
+   TicketRepositoryImpl(ticketRemoteDataSource);
+
+  // Auth
+  @lazySingleton
+  AuthRemoteDataSource get authRemoteDataSource =>
+   AuthRemoteDataSource(client: getIt<http.Client>());
 
   // Info (Sigue usando Mock)
   @lazySingleton

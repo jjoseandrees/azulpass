@@ -1,35 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../shared/widgets/primary_button.dart';
 import '../viewmodel/my_tickets_viewmodel.dart';
-import '../../../../domain/entities/ticket_entity.dart';
 
-class TicketsScreen extends ConsumerWidget {
+class TicketsScreen extends ConsumerStatefulWidget {
   const TicketsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TicketsScreen> createState() => _TicketsScreenState();
+}
+
+class _TicketsScreenState extends ConsumerState<TicketsScreen> {
+  final _rutController = TextEditingController();
+  bool _isLoggedIn = false;
+
+  @override
+  void dispose() {
+    _rutController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final ticketsAsync = ref.watch(myTicketsProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mis Entradas'),
       ),
-      body: ticketsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primaryBlue)),
-        error: (err, _) => Center(child: Text('Error al cargar: $err')),
-        data: (tickets) {
-          if (tickets.isEmpty) {
-            return _buildEmptyState();
-          }
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: tickets.length,
-            itemBuilder: (context, index) {
-              return _TicketCard(ticket: tickets[index]);
-            },
-          );
-        },
+      body: !_isLoggedIn
+          ? _buildLoginScreen()
+          : ticketsAsync.when(
+              loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primaryBlue)),
+              error: (err, _) => Center(child: Text('Error: $err')),
+              data: (tickets) {
+                if (tickets.isEmpty) {
+                  return _buildEmptyState();
+                }
+                return ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: tickets.length,
+                  itemBuilder: (context, index) {
+                    return _TicketCard(ticket: tickets[index]);
+                  },
+                );
+              },
+            ),
+    );
+  }
+
+  Widget _buildLoginScreen() {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.confirmation_number_outlined, size: 64, color: AppColors.primaryBlue),
+            const SizedBox(height: 24),
+            const Text(
+              'Inicia sesión para ver tus entradas',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            TextField(
+              controller: _rutController,
+              decoration: const InputDecoration(
+                labelText: 'RUT',
+                hintText: '12.345.678-9',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            PrimaryButton(
+              label: 'Ingresar',
+              onPressed: () {
+                if (_rutController.text.isNotEmpty) {
+                  ref.read(myTicketsProvider.notifier).login(_rutController.text);
+                  setState(() {
+                    _isLoggedIn = true;
+                  });
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -45,11 +102,11 @@ class TicketsScreen extends ConsumerWidget {
             const SizedBox(height: 16),
             const Text(
               'Aún no tienes entradas',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
-              'Compra tu entrada para el próximo partido de la U y aparecerá aquí.',
+              'Compra tu entrada para el próximo partido de la U.',
               textAlign: TextAlign.center,
               style: TextStyle(color: AppColors.textSecondary),
             ),
@@ -61,7 +118,7 @@ class TicketsScreen extends ConsumerWidget {
 }
 
 class _TicketCard extends StatelessWidget {
-  final TicketEntity ticket;
+  final dynamic ticket;
   const _TicketCard({required this.ticket});
 
   @override
@@ -72,12 +129,11 @@ class _TicketCard extends StatelessWidget {
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 4)),
+          BoxShadow(color: Colors.black.withAlpha(13), blurRadius: 10, offset: const Offset(0, 4)),
         ],
       ),
       child: Column(
         children: [
-          // Parte superior: Info del partido
           Container(
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
@@ -95,9 +151,12 @@ class _TicketCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Universidad de Chile', style: TextStyle(color: Colors.white70, fontSize: 12)),
                       Text(
-                        'vs Everton', // En la app final, esto vendra de la relación con el MatchEntity
+                        ticket.homeTeam,
+                        style: const TextStyle(color: Colors.white70, fontSize: 12),
+                      ),
+                      Text(
+                        'vs ${ticket.awayTeam}',
                         style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -107,22 +166,18 @@ class _TicketCard extends StatelessWidget {
               ],
             ),
           ),
-          
-          // Línea punteada simulando el corte del ticket
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
             child: DottedDivider(),
           ),
-
-          // Parte inferior: Detalles
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildDetail('SECTOR', ticket.sectorName),
-                _buildDetail('ASIENTO', 'Libre'),
-                _buildDetail('FECHA', '26/10/2026'),
+                _buildDetail('CANTIDAD', '${ticket.quantity ?? 1}'),
+                _buildDetail('ESTADIO', ticket.stadium.isNotEmpty ? ticket.stadium : 'N/A'),
               ],
             ),
           ),
@@ -143,7 +198,6 @@ class _TicketCard extends StatelessWidget {
   }
 }
 
-// Widget personalizado para la línea punteada
 class DottedDivider extends StatelessWidget {
   const DottedDivider({super.key});
 

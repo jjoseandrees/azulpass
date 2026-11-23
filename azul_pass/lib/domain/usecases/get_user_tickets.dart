@@ -7,7 +7,7 @@ class GetUserTickets {
   final TicketRepository repository;
   GetUserTickets(this.repository);
 
-  Future<List<TicketEntity>> call() async {
-    return await repository.getUserTickets();
+  Future<List<TicketEntity>> call(String rut) async {
+    return await repository.getUserTickets(rut);
   }
 }

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const ticketController = require('../controllers/ticketController');
+const authenticateToken = require('../middleware/auth');
 
-// GET /api/tickets - Obtener entradas del usuario
-router.get('/', ticketController.getUserTickets);
+// Obtener entradas del usuario autenticado
+router.get('/my-tickets', authenticateToken, ticketController.getMyTickets);
 
-// POST /api/tickets/purchase - Procesar compra de entradas
+// Procesar compra de entradas
 router.post('/purchase', ticketController.processPurchase);
 
 module.exports = router;

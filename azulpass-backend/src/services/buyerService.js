@@ -11,6 +11,10 @@ class BuyerService {
     
     return buyer;
   }
+
+  async findByRut(rut){
+    return await buyerRepository.findByRut(rut);
+  }
 }
 
 module.exports = new BuyerService();

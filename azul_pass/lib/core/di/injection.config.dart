@@ -15,8 +15,12 @@ import 'package:azul_pass/data/datasources/mock/info_mock_datasource.dart'
     as _i626;
 import 'package:azul_pass/data/datasources/mock/shop_mock_datasource.dart'
     as _i999;
+import 'package:azul_pass/data/datasources/remote/auth_remote_datasource.dart'
+    as _i514;
 import 'package:azul_pass/data/datasources/remote/match_remote_datasources.dart'
     as _i845;
+import 'package:azul_pass/data/datasources/remote/ticket_remote_datasources.dart'
+    as _i1013;
 import 'package:azul_pass/domain/repositories/info_repository.dart' as _i178;
 import 'package:azul_pass/domain/repositories/match_repository.dart' as _i274;
 import 'package:azul_pass/domain/repositories/shop_repository.dart' as _i792;
@@ -47,8 +51,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i274.MatchRepository>(
       () => injectionModule.matchRepository,
     );
+    gh.lazySingleton<_i1013.TicketRemoteDataSource>(
+      () => injectionModule.ticketRemoteDataSource,
+    );
     gh.lazySingleton<_i169.TicketRepository>(
       () => injectionModule.ticketRepository,
+    );
+    gh.lazySingleton<_i514.AuthRemoteDataSource>(
+      () => injectionModule.authRemoteDataSource,
     );
     gh.lazySingleton<_i626.InfoMockDataSource>(
       () => injectionModule.infoMockDataSource,

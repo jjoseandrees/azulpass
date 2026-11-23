@@ -5,6 +5,7 @@ const { generalLimiter, purchaseLimiter } = require('./middleware/rateLimiter');
 const matchRoutes = require('./routes/matchRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
 const buyerRoutes = require('./routes/buyerRoutes');
+const authRoutes = require('./routes/authRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const env = require('./config/env');
 
@@ -39,7 +40,7 @@ app.use('/api/', generalLimiter); // Aplicar a todas las rutas API
 app.use('/api/matches', matchRoutes);
 app.use('/api/tickets', ticketRoutes); // Rate limiter estricto para compras
 app.use('/api/buyers', buyerRoutes); // Rutas de compradores (si se expanden en el futuro)
-
+app.use('/api/auth', authRoutes); // Rutas de autenticación
 // Health check
 app.get('/health', (req, res) => {
   res.json({ 

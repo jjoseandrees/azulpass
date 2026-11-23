@@ -2,10 +2,12 @@ import '../../domain/entities/buyer_entity.dart';
 import '../../domain/entities/sector_entity.dart';
 import '../../domain/entities/ticket_entity.dart';
 import '../../domain/repositories/ticket_repository.dart';
+import '../datasources/remote/ticket_remote_datasources.dart';
 
 class TicketRepositoryImpl implements TicketRepository {
+  final TicketRemoteDataSource remoteDataSource;
 
-  final List<TicketEntity> _mockDatabase = [];
+  TicketRepositoryImpl(this.remoteDataSource);
 
   @override
   Future<TicketEntity> processPayment({
@@ -14,25 +16,22 @@ class TicketRepositoryImpl implements TicketRepository {
     required int quantity,
     required BuyerEntity buyer,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 2500));
-    
-    final TicketEntity ticket = TicketEntity(
-      id: 'TKT-${DateTime.now().millisecondsSinceEpoch}',
-      matchId: matchId,
-      sectorName: sector.name,
+    final ticketModel = await remoteDataSource.purchaseTicket(
+      matchId: int.parse(matchId),
+      sectorId: int.parse(sector.id),
+      quantity: quantity,
       buyerRut: buyer.rut,
       buyerName: buyer.fullName,
-      purchaseDate: DateTime.now(),
-      qrCodeData: 'AZULPASS-$matchId-${buyer.rut}-${sector.id}',
+      buyerEmail: buyer.email,
+      buyerPhone: buyer.phone,
     );
 
-    _mockDatabase.add(ticket);
-    return ticket;
+    return ticketModel.toEntity();
   }
 
   @override
-  Future<List<TicketEntity>> getUserTickets() async {
-    await Future.delayed(const Duration(milliseconds: 800));
-    return List.unmodifiable((_mockDatabase));
+  Future<List<TicketEntity>> getUserTickets(String rut) async {
+    final ticketModels = await remoteDataSource.getUserTickets(rut);
+    return ticketModels.map((model) => model.toEntity()).toList();
   }
 }

@@ -9,20 +9,12 @@ part of 'my_tickets_viewmodel.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(myTickets)
-final myTicketsProvider = MyTicketsProvider._();
+@ProviderFor(MyTicketsNotifier)
+final myTicketsProvider = MyTicketsNotifierProvider._();
 
-final class MyTicketsProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<TicketEntity>>,
-          List<TicketEntity>,
-          FutureOr<List<TicketEntity>>
-        >
-    with
-        $FutureModifier<List<TicketEntity>>,
-        $FutureProvider<List<TicketEntity>> {
-  MyTicketsProvider._()
+final class MyTicketsNotifierProvider
+    extends $AsyncNotifierProvider<MyTicketsNotifier, List<TicketEntity>> {
+  MyTicketsNotifierProvider._()
     : super(
         from: null,
         argument: null,
@@ -34,18 +26,30 @@ final class MyTicketsProvider
       );
 
   @override
-  String debugGetCreateSourceHash() => _$myTicketsHash();
+  String debugGetCreateSourceHash() => _$myTicketsNotifierHash();
 
   @$internal
   @override
-  $FutureProviderElement<List<TicketEntity>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<List<TicketEntity>> create(Ref ref) {
-    return myTickets(ref);
-  }
+  MyTicketsNotifier create() => MyTicketsNotifier();
 }
 
-String _$myTicketsHash() => r'f9cd6ba41078c640e2a62597b51386df37371a6e';
+String _$myTicketsNotifierHash() => r'4a974a8e063652c604b42abdc3de6f3de907c605';
+
+abstract class _$MyTicketsNotifier extends $AsyncNotifier<List<TicketEntity>> {
+  FutureOr<List<TicketEntity>> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref as $Ref<AsyncValue<List<TicketEntity>>, List<TicketEntity>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<TicketEntity>>, List<TicketEntity>>,
+              AsyncValue<List<TicketEntity>>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}

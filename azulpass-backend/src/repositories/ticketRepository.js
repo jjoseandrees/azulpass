@@ -92,6 +92,28 @@ class TicketRepository {
     const result = await pool.query(query, [buyerId]);
     return result.rows;
   }
+
+    // Obtener detalles de una entrada por ID
+async getTicketDetailsById(ticketId) {
+  const query = `
+    SELECT 
+      t.id, t.quantity, t.qr_code, t.purchase_date, t.total_price,
+      m.id as match_id, m.home_team, m.away_team, m.match_date, m.stadium,
+      s.id as sector_id, s.name as sector_name, s.price as sector_price
+    FROM tickets t
+    LEFT JOIN matches m ON t.match_id = m.id
+    LEFT JOIN sectors s ON t.sector_id = s.id
+    WHERE t.id = $1
+  `;
+  const result = await pool.query(query, [ticketId]);
+  
+  if (result.rows.length === 0) {
+    console.log(`⚠️  No se encontró ticket con ID: ${ticketId}`);
+    return null;
+  }
+  
+  return result.rows[0];
+}
 }
 
 module.exports = new TicketRepository();
