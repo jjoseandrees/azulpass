@@ -10,7 +10,7 @@ class MatchRemoteDataSource {
   Future<List<Map<String, dynamic>>> getUpcomingMatches() async {
     final response = await client.get(
       Uri.parse('${ApiConstants.baseUrl}${ApiConstants.matches}'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true'},
     );
 
     if (response.statusCode == 200) {
@@ -24,7 +24,7 @@ class MatchRemoteDataSource {
   Future<Map<String, dynamic>> getMatchById(String id) async {
     final response = await client.get(
       Uri.parse('${ApiConstants.baseUrl}${ApiConstants.matches}/$id'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true'},
     );
 
     if (response.statusCode == 200) {

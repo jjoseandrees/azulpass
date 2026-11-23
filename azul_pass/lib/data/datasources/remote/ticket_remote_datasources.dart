@@ -21,7 +21,7 @@ class TicketRemoteDataSource {
 
     final response = await client.post(
       url,
-      headers: {'Content-Type': 'application/json; charset=utf-8'}, // UTF-8 para las tildes
+      headers: {'Content-Type': 'application/json; charset=utf-8', 'ngrok-skip-browser-warning': 'true'}, // UTF-8 para las tildes
       body: jsonEncode({
         'matchId': matchId,
         'sectorId': sectorId,
@@ -48,7 +48,7 @@ class TicketRemoteDataSource {
 
     final response = await client.get(
       url,
-      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      headers: {'Content-Type': 'application/json; charset=utf-8', 'ngrok-skip-browser-warning': 'true'},
     );
 
     if (response.statusCode == 200) {

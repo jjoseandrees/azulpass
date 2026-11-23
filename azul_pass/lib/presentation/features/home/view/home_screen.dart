@@ -139,12 +139,6 @@ class HomeScreen extends ConsumerWidget {
           icon: Icons.stadium,
           onTap: () => context.go('/info'),
         ),
-        QuickAccessCard(
-          title: 'Antes de ir',
-          icon: Icons.checklist,
-          onTap: () {
-          },
-        ),
       ],
     );
   }

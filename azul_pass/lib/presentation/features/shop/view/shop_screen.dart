@@ -29,23 +29,6 @@ class ShopScreen extends ConsumerWidget {
         error: (err, _) => Center(child: Text('Error: $err')),
         data: (products) => Column(
           children: [
-            // Banner de "Etapa 2"
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              color: AppColors.accentGold.withValues(alpha: 0.2),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.info_outline, color: AppColors.primaryBlue, size: 20),
-                  SizedBox(width: 8),
-                  Text(
-                    'Catálogo de demostración (Etapa 2)',
-                    style: TextStyle(color: AppColors.primaryBlue, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
             Expanded(
               child: GridView.builder(
                 padding: const EdgeInsets.all(16),
