@@ -11,6 +11,8 @@ const env = require('./config/env');
 
 const app = express();
 
+app.set('trust proxy', 1); // Para que rate limiting funcione detras del proxy utilizado (ngrok)
+
 // ============ SEGURIDAD ============
 app.use(helmet());
 
